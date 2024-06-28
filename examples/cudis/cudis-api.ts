@@ -4,9 +4,12 @@ interface CudisRequestApplyCodeRes {
   data: any;
 }
 
+import { baseUrl } from '../config';
+console.log('baseUrl', baseUrl);
+
 export const createCudisApi = () => {
   const getCheckInviteCode = async (inviteCode: string) => {
-    const url = `https://devtest.cudis.xyz/x/invite/code?invcode=${inviteCode}`;
+    const url = `${baseUrl}/x/invite/code?invcode=${inviteCode}`;
     const response = await fetch(url);
     const parsedResponse = (await response.json()) as CudisRequestApplyCodeRes;
     return parsedResponse.data;
@@ -21,7 +24,7 @@ export const createCudisApi = () => {
     token_symbol: number,
     tx: string,
   ) => {
-    const url = `https://devtest.cudis.xyz/x/invite/buy/report`;
+    const url = `${baseUrl}/x/invite/buy/report`;
 
     const params = {
       inv_pubkey: inv_pubkey,
@@ -44,7 +47,7 @@ export const createCudisApi = () => {
   };
 
   const getBindInviteInfo = async (pubkey: string) => {
-    const url = `https://devtest.cudis.xyz/x/inviteby?pubkey=${pubkey}`;
+    const url = `${baseUrl}/x/inviteby?pubkey=${pubkey}`;
     const response = await fetch(url);
     const parsedResponse = (await response.json()) as CudisRequestApplyCodeRes;
     return parsedResponse.data;

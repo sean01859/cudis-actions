@@ -19,9 +19,9 @@ import {
 import { prepareTransaction } from '../transaction-utils';
 import cudisApi from './cudis-api';
 
-const DONATION_DESTINATION_WALLET =
-  '8AVzKnx2eRWX6WDqwbV6Sv8VxBVC2g1RCEwMERHDFifv';
-// '3h4AtoLTh3bWwaLhdtgQtcC3a3Tokb8NJbtqR9rhp7p6';
+import { DONATION_DESTINATION_WALLET } from '../config';
+
+console.log('DONATION_DESTINATION_WALLET', DONATION_DESTINATION_WALLET);
 const DONATION_AMOUNT_SOL_OPTIONS = [1, 5, 10];
 const DEFAULT_DONATION_AMOUNT_SOL = 1.5;
 
@@ -162,16 +162,12 @@ app.openapi(
       new PublicKey(DONATION_DESTINATION_WALLET),
       parsedAmount * LAMPORTS_PER_SOL,
     );
-    console.log('transaction', transaction);
     const response: ActionsSpecPostResponse = {
       transaction: Buffer.from(transaction.serialize()).toString('base64'),
     };
 
-    // console.log('response======', response);
-
     if (!bindInviteInfoRes) {
       let bindRes = await cudisApi.getBindInviteCode(account, inviteCode);
-      console.log('bindRes', bindRes);
     }
     let reportRes = await cudisApi.getReportBuyOrder(
       checkInviteCodeRes.inv_pubkey,
@@ -184,7 +180,6 @@ app.openapi(
       1,
       response.transaction,
     );
-    // console.log('reportRes', reportRes);
 
     return c.json(response, 200);
   },
