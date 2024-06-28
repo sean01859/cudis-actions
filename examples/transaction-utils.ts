@@ -1,9 +1,10 @@
 import {
-  clusterApiUrl, Connection,
+  clusterApiUrl,
+  Connection,
   PublicKey,
   TransactionInstruction,
   TransactionMessage,
-  VersionedTransaction
+  VersionedTransaction,
 } from '@solana/web3.js';
 
 const environment = process.env.ENVIRONMENT || 'development';
@@ -17,7 +18,7 @@ export const connection = new Connection(rpcUrl);
 
 export async function prepareTransaction(
   instructions: TransactionInstruction[],
-  payer: PublicKey
+  payer: PublicKey,
 ) {
   const blockhash = await connection
     .getLatestBlockhash({ commitment: 'max' })
@@ -25,7 +26,8 @@ export async function prepareTransaction(
   const messageV0 = new TransactionMessage({
     payerKey: payer,
     recentBlockhash: blockhash,
-    instructions
+    instructions,
   }).compileToV0Message();
+
   return new VersionedTransaction(messageV0);
 }

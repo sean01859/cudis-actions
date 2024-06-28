@@ -1,6 +1,5 @@
 import { serve } from '@hono/node-server';
-import donate from './donate/route';
-import jupiterSwap from './jupiter-swap/route';
+import cudis from './cudis/route';
 import { cors } from 'hono/cors';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
@@ -9,8 +8,7 @@ const app = new OpenAPIHono();
 app.use('/*', cors());
 
 // <--Actions-->
-app.route('/api/donate', donate);
-app.route('/api/jupiter/swap', jupiterSwap);
+app.route('/api/cudis', cudis);
 // </--Actions-->
 
 app.doc('/doc', {

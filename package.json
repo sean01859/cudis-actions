@@ -10,16 +10,18 @@
     "dev": "tsx watch examples/index.ts"
   },
   "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
     "@hono/node-server": "^1.11.3",
     "@hono/swagger-ui": "^0.3.0",
     "@hono/zod-openapi": "^0.14.5",
     "@jup-ag/api": "^6.0.23",
+    "@metaplex/js": "^4.12.0",
     "@solana/web3.js": "^1.91.8",
     "hono": "^4.4.7"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
-    "tsx": "^4.7.1",
-    "prettier": "^3.3.2"
+    "prettier": "^3.3.2",
+    "tsx": "^4.7.1"
   }
 }
