@@ -11,20 +11,20 @@ app.use('/*', cors());
 app.route('/api/cudis', cudis);
 // </--Actions-->
 
-app.doc('/doc', {
-  info: {
-    title: 'An API',
-    version: 'v1',
-  },
-  openapi: '3.1.0',
-});
+// app.doc('/doc', {
+//   info: {
+//     title: 'An API',
+//     version: 'v1',
+//   },
+//   openapi: '3.1.0',
+// });
 
-app.get(
-  '/swagger-ui',
-  swaggerUI({
-    url: '/doc',
-  }),
-);
+// app.get(
+//   '/swagger-ui',
+//   swaggerUI({
+//     url: '/doc',
+//   }),
+// );
 
 const port = 3000;
 console.log(

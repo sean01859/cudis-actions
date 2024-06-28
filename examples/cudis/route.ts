@@ -30,6 +30,19 @@ const app = new OpenAPIHono();
 app.openapi(
   createRoute({
     method: 'get',
+    path: '/health',
+    tags: ['Health'],
+    responses: actionsSpecOpenApiGetResponse,
+  }),
+  (c) => {
+    const response = { message: 'Server is healthy' };
+    return c.json(response, 200);
+  },
+);
+
+app.openapi(
+  createRoute({
+    method: 'get',
     path: '/buy',
     tags: ['Cudis'],
     responses: actionsSpecOpenApiGetResponse,
