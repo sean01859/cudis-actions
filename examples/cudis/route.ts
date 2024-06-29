@@ -164,9 +164,16 @@ app.openapi(
     }
 
     let checkInviteCodeRes = await cudisApi.getCheckInviteCode(inviteCode);
+    console.log('checkInviteCodeRes', checkInviteCodeRes);
 
     if (!checkInviteCodeRes) {
-      return c.json({ message: 'Invalid invite code' }, 400);
+      // return c.json({ message: 'Invalid invite code' }, 400);
+      checkInviteCodeRes = {
+        inv_pubkey: 'dialect Invalid invite code',
+        discount_switch: false,
+        real_price: DEFAULT_DONATION_AMOUNT_SOL,
+        discount_percent: 100,
+      };
     }
 
     const parsedAmount = parseFloat(checkInviteCodeRes.real_price);
@@ -178,9 +185,11 @@ app.openapi(
     const response: ActionsSpecPostResponse = {
       transaction: Buffer.from(transaction.serialize()).toString('base64'),
     };
+    console.log('response', response);
 
-    if (!bindInviteInfoRes) {
+    if (!bindInviteInfoRes && checkInviteCodeRes.inv_pubkey) {
       let bindRes = await cudisApi.getBindInviteCode(account, inviteCode);
+      console.log('bindRes', bindRes);
     }
     let reportRes = await cudisApi.getReportBuyOrder(
       checkInviteCodeRes.inv_pubkey,
@@ -193,13 +202,14 @@ app.openapi(
       1,
       response.transaction,
     );
+    console.log('reportRes', reportRes);
 
     return c.json(response, 200);
   },
-  // async (result, c) => {
-  //   console.error('err', result);
-  //   // return c.json({ message: 'Internal Server Error' }, 500);
-  // },
+  async (result, c) => {
+    console.error('err', result);
+    // return c.json({ message: 'Internal Server Error' }, 500);
+  },
 );
 
 function getCudisInfo(): Pick<
@@ -207,9 +217,9 @@ function getCudisInfo(): Pick<
   'icon' | 'title' | 'description'
 > {
   const icon = 'https://static.cudis.xyz/static/Blink.png';
-  const title = 'Get The Ring';
+  const title = 'Get the CUDIS Ring!';
   const description =
-    'Cybersecurity Enthusiast | Support my research with a donation.';
+    'The first stage sold out in 10 days, and now we’re in stage two. Join us—you’re still early! (Enter shipping address on cudis.xyz/dashboard 10 mins after purchase.)';
   return { icon, title, description };
 }
 
