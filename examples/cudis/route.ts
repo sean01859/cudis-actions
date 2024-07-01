@@ -216,7 +216,7 @@ function getCudisInfo(): Pick<
   ActionsSpecGetResponse,
   'icon' | 'title' | 'description'
 > {
-  const icon = 'https://static.cudis.xyz/static/Blink.png';
+  const icon = 'https://static.cudis.xyz/static/cudis_logo_new.jpg';
   const title = 'Get the CUDIS Ring!';
   const description =
     'The first stage sold out in 10 days, and now we’re in stage two. Join us—you’re still early! (Enter shipping address on cudis.xyz/dashboard 10 mins after purchase.)';
