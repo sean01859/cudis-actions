@@ -3,7 +3,9 @@ import cudis from './cudis/route';
 import { cors } from 'hono/cors';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
-
+import 'dotenv/config';
+const environment = process.argv[2];
+console.log('Environment:', environment);
 const app = new OpenAPIHono();
 app.use('/*', cors());
 
@@ -26,7 +28,7 @@ app.route('/api/cudis', cudis);
 //   }),
 // );
 
-const port = 3000;
+const port = environment === 'production' ? 4000 : 3000;
 console.log(
   `Server is running on port ${port}
 Visit http://localhost:${port}/swagger-ui to explore existing actions

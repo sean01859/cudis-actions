@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-const environment = process.env.ENVIRONMENT || 'development';
+const environment = process.argv[2];
 
 export const baseUrl =
   environment === 'production'

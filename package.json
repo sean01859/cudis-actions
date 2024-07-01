@@ -7,7 +7,8 @@
     "url": "https://github.com/dialectlabs/actions"
   },
   "scripts": {
-    "dev": "tsx watch examples/index.ts"
+    "dev": "tsx watch examples/index.ts development",
+    "prod": "tsx watch examples/index.ts production"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
