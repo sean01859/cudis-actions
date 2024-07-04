@@ -4,7 +4,7 @@ import {
   SystemProgram,
   VersionedTransaction,
 } from '@solana/web3.js';
-import mixpanel from 'mixpanel';
+const Mixpanel = require('mixpanel');
 
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import {
@@ -22,12 +22,7 @@ import cudisApi from './cudis-api';
 
 import { DONATION_DESTINATION_WALLET, mixpanel_id } from '../config';
 
-mixpanel.init(
-  mixpanel_id,
-  {
-    host: "api-eu.mixpanel.com",
-  },
-);
+const mixpanel = Mixpanel.init(mixpanel_id, { geolocate: false });
 
 // console.log('DONATION_DESTINATION_WALLET', DONATION_DESTINATION_WALLET);
 const DONATION_AMOUNT_SOL_OPTIONS = [1, 5, 10];
