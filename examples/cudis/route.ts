@@ -21,7 +21,7 @@ import cudisApi from './cudis-api';
 
 import { DONATION_DESTINATION_WALLET } from '../config';
 
-console.log('DONATION_DESTINATION_WALLET', DONATION_DESTINATION_WALLET);
+// console.log('DONATION_DESTINATION_WALLET', DONATION_DESTINATION_WALLET);
 const DONATION_AMOUNT_SOL_OPTIONS = [1, 5, 10];
 const DEFAULT_DONATION_AMOUNT_SOL = 1.5;
 
@@ -159,12 +159,14 @@ app.openapi(
 
     let bindInviteInfoRes = await cudisApi.getBindInviteInfo(account);
 
+    console.log('bindInviteInfoRes--------', bindInviteInfoRes);
+
     if (bindInviteInfoRes?.invcode) {
       inviteCode = bindInviteInfoRes?.invcode;
     }
 
     let checkInviteCodeRes = await cudisApi.getCheckInviteCode(inviteCode);
-    console.log('checkInviteCodeRes', checkInviteCodeRes);
+    console.log('checkInviteCodeRes---------', checkInviteCodeRes);
 
     if (!checkInviteCodeRes) {
       // return c.json({ message: 'Invalid invite code' }, 400);
@@ -182,14 +184,15 @@ app.openapi(
       new PublicKey(DONATION_DESTINATION_WALLET),
       parsedAmount * LAMPORTS_PER_SOL,
     );
+    console.log('transaction--------', transaction);
     const response: ActionsSpecPostResponse = {
       transaction: Buffer.from(transaction.serialize()).toString('base64'),
     };
-    console.log('response', response);
+    console.log('response txhash', response);
 
     if (!bindInviteInfoRes && checkInviteCodeRes.inv_pubkey) {
       let bindRes = await cudisApi.getBindInviteCode(account, inviteCode);
-      console.log('bindRes', bindRes);
+      console.log('bindRes------', bindRes);
     }
     let reportRes = await cudisApi.getReportBuyOrder(
       checkInviteCodeRes.inv_pubkey,
@@ -202,14 +205,10 @@ app.openapi(
       1,
       response.transaction,
     );
-    console.log('reportRes', reportRes);
+    console.log('reportRes-------', reportRes);
 
     return c.json(response, 200);
-  },
-  async (result, c) => {
-    console.error('err', result);
-    // return c.json({ message: 'Internal Server Error' }, 500);
-  },
+  }
 );
 
 function getCudisInfo(): Pick<

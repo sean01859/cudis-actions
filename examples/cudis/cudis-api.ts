@@ -5,13 +5,14 @@ interface CudisRequestApplyCodeRes {
 }
 
 import { baseUrl } from '../config';
-console.log('baseUrl', baseUrl);
+// console.log('baseUrl', baseUrl);
 
 export const createCudisApi = () => {
   const getCheckInviteCode = async (inviteCode: string) => {
     const url = `${baseUrl}/x/invite/code?invcode=${inviteCode}`;
     const response = await fetch(url);
     const parsedResponse = (await response.json()) as CudisRequestApplyCodeRes;
+    console.log('getCheckInviteCode===', parsedResponse);
     return parsedResponse.data;
   };
 
@@ -43,6 +44,7 @@ export const createCudisApi = () => {
       body: JSON.stringify(params),
     });
     const parsedResponse = (await response.json()) as CudisRequestApplyCodeRes;
+    console.log('getReportBuyOrder====', parsedResponse);
     return parsedResponse.data;
   };
 
@@ -50,6 +52,7 @@ export const createCudisApi = () => {
     const url = `${baseUrl}/x/inviteby?pubkey=${pubkey}`;
     const response = await fetch(url);
     const parsedResponse = (await response.json()) as CudisRequestApplyCodeRes;
+    console.log('getBindInviteInfo====', parsedResponse);
     return parsedResponse.data;
   };
 
@@ -59,7 +62,6 @@ export const createCudisApi = () => {
       invcode: invcode,
       sign: 'dialect',
     };
-
     const formBody = Object.keys(params)
       .map(
         (key) =>
@@ -67,9 +69,9 @@ export const createCudisApi = () => {
       )
       .join('&');
 
-    // console.log('params getBindInviteCode', params);
+    console.log('params getBindInviteCode', params);
 
-    const url = `https://devtest.cudis.xyz/x/inviteby`;
+    const url = `${baseUrl}/x/inviteby`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -77,21 +79,11 @@ export const createCudisApi = () => {
       },
       body: formBody,
     });
-    // console.log('response getBindInviteCode', response);
+    console.log('response getBindInviteCode', response);
     const parsedResponse = (await response.json()) as CudisRequestApplyCodeRes;
+    console.log('getBindInviteCode====', parsedResponse);
     return parsedResponse.data;
   };
-
-  //   // promote
-  // export const requestPromote = (
-  //   params: requestPromoteReq
-  // ): Promise<requestPromoteRes> => request.post("/v1/x/get/promotion", params);
-
-  // // update promotion
-  // export const requestUpdatePromotion = (
-  //   params: requestUpdatePromotionReq
-  // ): Promise<requestUpdatePromotionRes> =>
-  //   request.post("/v1/x/update/promotion", params);
 
   return {
     getCheckInviteCode,
