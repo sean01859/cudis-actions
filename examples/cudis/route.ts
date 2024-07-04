@@ -4,6 +4,7 @@ import {
   SystemProgram,
   VersionedTransaction,
 } from '@solana/web3.js';
+import mixpanel from 'mixpanel-browser';
 
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import {
@@ -20,6 +21,12 @@ import { prepareTransaction } from '../transaction-utils';
 import cudisApi from './cudis-api';
 
 import { DONATION_DESTINATION_WALLET } from '../config';
+
+mixpanel.init('30d2c38bff6818cca87aa64cadae7320', {
+  debug: true,
+  track_pageview: true,
+  persistence: 'localStorage',
+});
 
 // console.log('DONATION_DESTINATION_WALLET', DONATION_DESTINATION_WALLET);
 const DONATION_AMOUNT_SOL_OPTIONS = [1, 5, 10];
@@ -157,6 +164,9 @@ app.openapi(
 
     const { account } = (await c.req.json()) as ActionsSpecPostRequestBody;
 
+    mixpanel.track('dialect', {
+      action: account,
+    });
     let bindInviteInfoRes = await cudisApi.getBindInviteInfo(account);
 
     console.log('bindInviteInfoRes--------', bindInviteInfoRes);
@@ -208,7 +218,7 @@ app.openapi(
     console.log('reportRes-------', reportRes);
 
     return c.json(response, 200);
-  }
+  },
 );
 
 function getCudisInfo(): Pick<
