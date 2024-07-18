@@ -4,6 +4,7 @@ import { cors } from 'hono/cors';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import 'dotenv/config';
+import actionsJson from './actions.json';
 const environment = process.argv[2];
 console.log('Environment:', environment);
 const app = new OpenAPIHono();
@@ -12,6 +13,10 @@ app.use('/*', cors());
 // <--Actions-->
 app.route('/api/cudis', cudis);
 // </--Actions-->
+
+app.get('/actions.json', (c) => {
+  return c.json(actionsJson);
+});
 
 // app.doc('/doc', {
 //   info: {
