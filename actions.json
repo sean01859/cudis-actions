@@ -1,0 +1,8 @@
+{
+    "rules": [
+      {
+        "pathPattern": "/buy/**",
+        "apiPath": "https://actions.dialect.to/api/cudis/buy/**"
+      }
+    ]
+  }
